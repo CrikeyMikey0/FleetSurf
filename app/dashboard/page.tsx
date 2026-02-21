@@ -116,10 +116,10 @@ export default function DashboardPage() {
         {/* Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {[
-            { label: "Total Vehicles", value: "35", icon: "🚗" },
-            { label: "Active Trips", value: "15", icon: "🛣️" },
-            { label: "Drivers", value: "35", icon: "👥" },
-            { label: "Revenue", value: "35000", icon: "💰" },
+            { label: "Total Vehicles", value: "34", icon: "🚗" },
+            { label: "Active Trips", value: "4", icon: "🛣️" },
+            { label: "Drivers", value: "8", icon: "👥" },
+            { label: "Revenue", value: "46000", icon: "💰" },
           ].map((card) => (
             <div key={card.label} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
