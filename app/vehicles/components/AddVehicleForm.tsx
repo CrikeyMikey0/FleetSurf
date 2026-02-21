@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import { Vehicle } from '../types'
 
 export default function AddVehicleForm({
@@ -8,97 +8,151 @@ export default function AddVehicleForm({
 }: {
   onAdd: (v: Vehicle) => void
 }) {
-  const [form, setForm] = useState<Vehicle>({
+  const initialState: Vehicle = {
     license_plate: '',
     max_capacity: 0,
     odometer: 0,
     type: '',
     model: '',
-  })
-
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    status: 'Available',
   }
 
-  const handleSubmit = (e: any) => {
+  const [form, setForm] = useState<Vehicle>(initialState)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type } = e.target
+
+    setForm(prev => ({
+      ...prev,
+      [name]:
+        type === 'number'
+          ? value === ''
+            ? 0
+            : Number(value)
+          : value,
+    }))
+  }
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    onAdd({ ...form, status: 'Available' })
-    setForm({
-      license_plate: '',
-      max_capacity: 0,
-      odometer: 0,
-      type: '',
-      model: '',
-    })
+    onAdd(form)
+    setForm(initialState)
+  }
+
+  const handleReset = () => {
+    setForm(initialState)
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="border rounded-xl p-4 space-y-3 bg-white shadow"
+      className="bg-[#1B1E19] rounded-2xl shadow-md border border-[#2a2d27] p-6 space-y-5 text-gray-100"
     >
-      <h2 className="font-semibold">New Vehicle Registration</h2>
+      {/* Header */}
+      <div>
+        <h2 className="text-lg font-semibold text-[#E4BF1B]">
+          New Vehicle Registration
+        </h2>
+        <p className="text-sm text-gray-400">
+          Enter vehicle details to add into fleet
+        </p>
+      </div>
 
-      <input
-        name="license_plate"
-        placeholder="License Plate"
-        value={form.license_plate}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
+      {/* Form Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* License Plate */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            License Plate *
+          </label>
+          <input
+            name="license_plate"
+            placeholder="e.g., GJ01AB1234"
+            value={form.license_plate}
+            onChange={handleChange}
+            className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
+            required
+          />
+        </div>
 
-      <input
-        name="max_capacity"
-        type="number"
-        placeholder="Max Payload"
-        value={form.max_capacity}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
+        {/* Max Capacity */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Max Capacity (kg) *
+          </label>
+          <input
+            name="max_capacity"
+            type="number"
+            placeholder="e.g., 500"
+            value={form.max_capacity}
+            onChange={handleChange}
+            className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
+            required
+          />
+        </div>
 
-      <input
-        name="odometer"
-        type="number"
-        placeholder="Initial Odometer"
-        value={form.odometer}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
+        {/* Odometer */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Initial Odometer *
+          </label>
+          <input
+            name="odometer"
+            type="number"
+            placeholder="e.g., 72000"
+            value={form.odometer}
+            onChange={handleChange}
+            className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
+            required
+          />
+        </div>
 
-      <input
-        name="type"
-        placeholder="Type"
-        value={form.type}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
+        {/* Type */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Vehicle Type *
+          </label>
+          <input
+            name="type"
+            placeholder="e.g., Truck / Van / Bike"
+            value={form.type}
+            onChange={handleChange}
+            className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
+            required
+          />
+        </div>
 
-      <input
-        name="model"
-        placeholder="Model"
-        value={form.model}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
+        {/* Model */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium mb-1">
+            Model *
+          </label>
+          <input
+            name="model"
+            placeholder="e.g., Tata Ace"
+            value={form.model}
+            onChange={handleChange}
+            className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
+            required
+          />
+        </div>
+      </div>
 
-      <div className="flex gap-2">
+      {/* Buttons */}
+      <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-[#2E7536] hover:bg-[#558953] text-white px-5 py-2 rounded-lg font-medium transition"
         >
-          Save
+          Save Vehicle
         </button>
 
         <button
-          type="reset"
-          className="border px-4 py-2 rounded"
+          type="button"
+          onClick={handleReset}
+          className="bg-[#E4BF1B] hover:opacity-90 text-black px-5 py-2 rounded-lg font-semibold transition"
         >
-          Cancel
+          Clear
         </button>
       </div>
     </form>

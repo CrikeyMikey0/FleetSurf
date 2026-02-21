@@ -5,5 +5,5 @@ export type Vehicle = {
   odometer: number
   type: string
   model: string
-  status?: string
+  status: string
 }
