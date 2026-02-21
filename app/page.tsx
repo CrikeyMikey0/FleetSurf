@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 bg-[#1B1E19] overflow-hidden selection:bg-[#2E7536]/30">
