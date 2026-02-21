@@ -8,6 +8,8 @@ export default function AddVehicleForm({
 }: {
   onAdd: (v: Vehicle) => void
 }) {
+    const plateRegex = /^[A-Z]{2}\d{1,2}[A-Z]{1,3}\d{4}$/i
+
   const initialState: Vehicle = {
     license_plate: '',
     max_capacity: 0,
@@ -104,7 +106,7 @@ export default function AddVehicleForm({
             onChange={handleChange}
             className="w-full bg-[#111410] border border-[#2f332d] rounded-lg p-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#558953]"
             required
-          />
+          />    
         </div>
 
         {/* Type */}
