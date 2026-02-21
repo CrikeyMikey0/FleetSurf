@@ -8,6 +8,7 @@ export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
     REGISTER: "/register",
+    TRIAL: "/trial"
   },
 
   // Main app routes
@@ -72,7 +73,7 @@ export const NAV_ITEMS = [
 /**
  * Public routes that don't require authentication
  */
-export const PUBLIC_ROUTES = [ROUTES.AUTH.LOGIN, ROUTES.AUTH.REGISTER, ROUTES.HOME] as const;
+export const PUBLIC_ROUTES = [ROUTES.AUTH.LOGIN, ROUTES.AUTH.REGISTER, ROUTES.AUTH.TRIAL, ROUTES.HOME] as const;
 
 /**
  * Protected routes that require authentication
